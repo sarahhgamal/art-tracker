@@ -1,0 +1,31 @@
+package com.arttracker.common;
+
+import lombok.*;
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApiResponse<T> {
+    private boolean success;
+    private T data;
+    private String error;
+    private String timestamp;
+
+    public static <T> ApiResponse<T> success(T data) {
+        return ApiResponse.<T>builder()
+                .success(true)
+                .data(data)
+                .timestamp(LocalDateTime.now().toString())
+                .build();
+    }
+
+    public static <T> ApiResponse<T> error(String message) {
+        return ApiResponse.<T>builder()
+                .success(false)
+                .error(message)
+                .timestamp(LocalDateTime.now().toString())
+                .build();
+    }
+}
